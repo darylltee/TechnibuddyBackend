@@ -1,35 +1,54 @@
-<?php
-header('Access-Control-Allow-Origin: http://localhost:8100');
-header('Access-Control-Allow-Credentials: true');
+	<?php
+
+	
+
+	/*
+		header('Access-Control-Allow-Origin: http://localhost:8100');
+	header('Access-Control-Allow-Credentials: true');
+	|--------------------------------------------------------------------------
+	| Routes File
+	|--------------------------------------------------------------------------
+	|
+	| Here is where you will register all of the routes in an application.
+	| It's a breeze. Simply tell Laravel the URIs it should respond to
+	| and give it the controller to call when that URI is requested.
+	|
+	*/
 /*
-|--------------------------------------------------------------------------
-| Routes File
-|--------------------------------------------------------------------------
-|
-| Here is where you will register all of the routes in an application.
-| It's a breeze. Simply tell Laravel the URIs it should respond to
-| and give it the controller to call when that URI is requested.
-|
+	Route::controllers([
+		'auth' => 'Auth\AuthController',
+		'password' => 'Auth\PasswordController',
+	]);
+
 */
+	Route::get('/', function () {
+	    return view('index');
+	});
+	
+	Route::group(['prefix' => 'api'], function()
+	{
 
-Route::get('/', 'WelcomeController@index');
+		
+		Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
+		Route::post('authenticate','AuthenticateController@authenticate');
+		
+
+	});
 
 
-Route::resource('api/pool','PoolsController',['middleware' => 'cors']);
 
 
-Route::resource('api/pooloptions','PoolOptionsController',['middleware' => 'cors']);
-Route::get('api/pooloption/addvote/{id}','PoolOptionsController@addVote',['middleware' => 'cors']);
 
 
-/*
-|--------------------------------------------------------------------------
-| Application Routes
-|--------------------------------------------------------------------------
-|
-| This route group applies the "web" middleware group to every route
-| it contains. The "web" middleware group is defined in your HTTP
-| kernel and includes session state, CSRF protection, and more.
-|
-*/
+
+	/*
+	|--------------------------------------------------------------------------
+	| Application Routes
+	|--------------------------------------------------------------------------
+	|
+	| This route group applies the "web" middleware group to every route
+	| it contains. The "web" middleware group is defined in your HTTP
+	| kernel and includes session state, CSRF protection, and more.
+	|
+	*/
 
