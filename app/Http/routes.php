@@ -1,10 +1,10 @@
 	<?php
 
-	
-
-	/*
-		header('Access-Control-Allow-Origin: http://localhost:8100');
+	header('Access-Control-Allow-Origin: *');
 	header('Access-Control-Allow-Credentials: true');
+
+	/*=
+		
 	|--------------------------------------------------------------------------
 	| Routes File
 	|--------------------------------------------------------------------------
@@ -29,9 +29,9 @@
 	{
 
 		
-		Route::resource('authenticate', 'AuthenticateController', ['only' => ['index']]);
-		Route::post('authenticate','AuthenticateController@authenticate');
-		
+		Route::resource('authenticate', 'AuthenticateController',['middleware' => ['cors']], ['only' => ['index']]);
+		Route::post('authenticate','AuthenticateController@authenticate',['middleware' => ['cors']]);
+	    Route::get('getUserData', 'AuthenticateController@getAuthenticatedUser');
 
 	});
 
